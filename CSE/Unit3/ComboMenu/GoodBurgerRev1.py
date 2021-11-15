@@ -5,7 +5,7 @@ ketchup_index = 3
 keepordering=True
 orderMasterList=[]
 runningTotalPrintOut=""
-tax = .03
+tax = .07
 
 while(keepordering):
 
@@ -13,17 +13,21 @@ while(keepordering):
      orderInformation = "\nYour Order:\n"
      chooseSandwich,chooseFries,chooseDrink = False,False,False
      order = ["", "", "", 0]     
-     sandwich = input("Which sandwich would you like:  chicken $5.25, beef $6.25, tofu $5.75 ")
-     if sandwich=="c" or sandwich=="b" or sandwich=="t":
-          orderInformation+=(f"\tSandwich:\t{sandwich}\n")
-          order[sandwich_index]=sandwich   #replace whatever is in the order list
-          chooseSandwich=True
-     if sandwich == "c":
-          total+=5.25
-     elif sandwich == "b":
-          total+=6.25
-     elif sandwich == "t":    #needs to be an elif because if I spell it wrong, it will charge 5.75
-          total+=5.75
+     sandwhich = input("Would you like a sandwhich? (y.n)")
+     if sandwhich == "y":
+          sandwich = input("Which sandwich would you like:  chicken $5.25, beef $6.25, tofu $5.75 ")
+          if sandwich=="c" or sandwich=="b" or sandwich=="t":
+               orderInformation+=(f"\tSandwich:\t{sandwich}\n")
+               order[sandwich_index]=sandwich   #replace whatever is in the order list
+               chooseSandwich=True
+          if sandwich == "c":
+               total+=5.25
+          elif sandwich == "b":
+               total+=6.25
+          elif sandwich == "t":    #needs to be an elif because if I spell it wrong, it will charge 5.75
+               total+=5.75
+     elif sandwhich == "n":
+          orderMasterList.append("no sandwhich")
 
      #iteration 2
      drink = input("Would you like a drink? (y,n) ")
@@ -43,6 +47,8 @@ while(keepordering):
                else:
                     total+=2.25
                     drink="l"
+     elif drink == "n":
+          orderMasterList.append("no drink")
 
           orderInformation+=(f"\tDrink:\t\t{drink}\n")
           order[beverage_index]=drink   #replace whatever is in the order list
@@ -64,6 +70,8 @@ while(keepordering):
                total+=1.75
           elif fries == "l":
                total+=2.00
+     elif fries == "n":
+          orderMasterList.append("no fries")
           orderInformation+=(f"\tFries:\t\t{fries}\n")
           order[fries_index]=fries   #replace whatever is in the order list
 
@@ -75,14 +83,14 @@ while(keepordering):
 
      # if chooseDrink and chooseFries and chooseSandwich:
      #      total-=1
-
+     #total with tax
+     finaltotal = total
+     finaltotal+=finaltotal*tax
+     finaltotal = str(round(finaltotal, 2))
      #if in our list a "" exist
      if not("" in order):
           total-=1
      #in checks to see if the item on left is in the item on right
-     #tax
-     total+=total*tax
-     total = str(round(total, 2))
 
      orderInformation+=(f"\tSubtotal: $\t{total}\n")
      # print(orderInformation)
@@ -94,6 +102,7 @@ while(keepordering):
           Fries:     {order[2]}
           Ketchup:   {order[3]}
           Subtotal: ${total}
+          Final Total: ${finaltotal}
      ​
      ''')
 
