@@ -1,72 +1,78 @@
-b="""
-    |   |   
--------------
-    |   |   
--------------
-    |   |   
-    
+b='''
+     |    |
+-----------------
+     |    |
+-----------------
+     |    |
+     '''
+
 """
-board=[[" "," "," "],[" "," "," "],[" "," "," "]]
-board[1][1]     #access the middle cell
-sampleboard=[[1,2,3],[4,5,6],[7,8,9]]
-'''
-print(sampleboard)
-for row in range(len(sampleboard)):    #range(len(sampleboard)) -> [0,1,2]
-    for columns in range(len(sampleboard[row])):
-        print(sampleboard[row][columns])
-'''
-
-def printboard(board):      
+sampleBoard=[[1,2,3],[4,5,6],[7,8,9]]
+print(sampleBoard)
+for row in range(len(sampleBoard)):    #range(len(sampleBoard))->[0,1,2]
+     for columns in range(len(sampleBoard[row])):
+          print(sampleBoard[row][columns])
+"""
+def printBoard(board):
     for r in range(3):
-        print(board[r][0]+" |"+board[r][1]+" | "+board[r][2])
+        print(board[r][0]+"|"+board[r][1]+"|"+board[r][2])
         if r<2:
-            print("-"*8)
-
-def choosespot(r,c,symbol,board)
-    if board[r][c] = " ":
+            print("-"*5)
+               
+#returns a true or false value on whether we can choose that spot
+def chooseSpot(r,c,symbol,board):
+    #if the spot is open
+    if board[r][c] == " ":
+        #add the symbol and return true
         board[r][c]=symbol
-        return True
-    return Fasle
+        return True    
+    return False
 
-printboard(board)
+def catGame(board):
+    #check every spot to see if there is something
+    for row in range(len(board)):    #range(len(sampleBoard))->[0,1,2]
+        for columns in range(len(board[row])):
+            if (board[row][columns]) == " ":
+                return False
+    print("CAT GAME!")
+    return True         #return stop the function and give a value back
 
-r = int(imput("row: "))-1
-c = int(input("col: "))-1
-board[r][c]="x"
-printboard(board)
-r = int(imput("row: "))-1
-c = int(input("col: "))-1
-board[r][c]="o"
+def checkForWinners(board):
+    #check horizontally
+    for r in range(len(board)):
+        #r is the rows and the columns are the same for each row
+        if (board[r][0] == board[r][1] and board[r][1] == board[r][2]) and board[r][0]!=" ":
+            print("Winner winner Turkey dinner!")
+            printBoard(board)
+            return True
 
+    #check vertically
 
-while symbol!="Q"
-    printboard(board)
-    
-    goodspot=False
-    while not goodspot:
-      1
-      1
-      1
-      1
-      1
-      11
-    
-    
-    
-    
-    
-    
-    
+    #check diagonally
+    #hard code
+
+board=[[" "," "," "],[" "," "," "],[" "," "," "]]
+symbol="X"
+while symbol!="Q":
+    printBoard(board)
+
+    #loop until a good spot is chosen
+    goodSpot=False
+    while not goodSpot:
+        r = int(input("row: "))-1
+        c = int(input("col: "))-1
+        #if we can NOT choose the spot
+        if((0<=r<=2) and (0<=c<=2)):
+            if (not chooseSpot(r,c,symbol,board)):
+                print("Spot Taken")
+            else:
+            goodSpot = True
+     
     #check for a winner or CAT
-    if catgame(board):
+    if catGame(board) or checkForWinners(board):
         symbol="Q"
     #switching our symbols
-    if symbol=="x"
-        symbol="o"
-    elif symbol=="o":
-        symbol="x"      
-        
-        #check vertically 
-        
-        #check diagonally
-        #hardcode
+    if symbol=="X":
+        symbol="O"
+    elif symbol=="O":
+        symbol="X"
