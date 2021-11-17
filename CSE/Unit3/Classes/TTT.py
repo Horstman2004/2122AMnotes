@@ -10,8 +10,8 @@ b='''
 sampleBoard=[[1,2,3],[4,5,6],[7,8,9]]
 print(sampleBoard)
 for row in range(len(sampleBoard)):    #range(len(sampleBoard))->[0,1,2]
-     for columns in range(len(sampleBoard[row])):
-          print(sampleBoard[row][columns])
+    for columns in range(len(sampleBoard[row])):
+        print(sampleBoard[row][columns])
 """
 def printBoard(board):
     for r in range(3):
@@ -66,7 +66,7 @@ while symbol!="Q":
             if (not chooseSpot(r,c,symbol,board)):
                 print("Spot Taken")
             else:
-            goodSpot = True
+                goodSpot = True
      
     #check for a winner or CAT
     if catGame(board) or checkForWinners(board):
