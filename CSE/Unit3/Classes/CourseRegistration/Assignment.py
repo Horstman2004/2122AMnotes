@@ -3,3 +3,6 @@ def assignment1():
     
 def assignment2():
     print("This is oyur second assignment")
+    
+def teachercourse1():
+    print("This is the class you teach")

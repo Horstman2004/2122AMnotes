@@ -1,9 +1,9 @@
-b='''
-     |    |
+b='''0  1       2
+0     |    |
 -----------------
-     |    |
+1     |    |
 -----------------
-     |    |
+2     |    |
      '''
 
 """
@@ -44,11 +44,13 @@ def checkForWinners(board):
         if (board[r][0] == board[r][1] and board[r][1] == board[r][2]) and board[r][0]!=" ":
             print("Winner winner Turkey dinner!")
             printBoard(board)
+        #check vertically
+        elif (board[c][0] == board[c][1] and board[c][1] == board[c][2]) and board[c][0]!=" ":
+            print("Winner winner Turkey dinner!")
+            printBoard(board)
             return True
-
-    #check vertically
-
-    #check diagonally
+        #check diagonally
+        
     #hard code
 
 board=[[" "," "," "],[" "," "," "],[" "," "," "]]
