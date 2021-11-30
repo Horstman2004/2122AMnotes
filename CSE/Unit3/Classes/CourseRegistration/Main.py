@@ -8,9 +8,41 @@ courseList=[Course("Lunch",teacherList[0]),Course("Algebra",teacherList[1]),Cour
 studentList=[]
 
 classToLookup = "Algebra"
-for course in courseList:
-    if course.name == "Lunch":
-        print(Course.courseID,Course.name,Course.teacher)
+#for course in courseList:
+    #if course.name == "Lunch":
+        #print(Course.courseID,Course.name,Course.teacher)
+
+
+with open("data/teacher.csv","r") as file:
+    teacherFile = file.readlines()
+    
+for line in teacherFile:
+    name,course,junk = line.split("\t",2)
+    print(name,course)
+
+    teacherList.append(Teacher(name,course))
+i=-1  
+for line in teacherFile:
+    nameOfTeacher,nameOfCourse,junk = line.split("\t",2)
+    if i!=2:
+        courseList.append(Course(nameOfCourse,teacherList[i]))
+    i+=1
+        
+
+print(teacherList)
+
+
+print(teacherFile)
+    
+
+
+
+
+
+
+
+
+
 
 
 

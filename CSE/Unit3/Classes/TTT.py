@@ -1,3 +1,4 @@
+import random
 b='''0  1       2
 0     |    |
 -----------------
@@ -45,30 +46,41 @@ def checkForWinners(board):
             print("Winner winner Turkey dinner!")
             printBoard(board)
         #check vertically
-        elif (board[c][0] == board[c][1] and board[c][1] == board[c][2]) and board[c][0]!=" ":
+    for c in range(len(board)):
+        if (board[0][c] == board[1][c] and board[1][c] == board[2][c]) and board[0][c]!=" ":
             print("Winner winner Turkey dinner!")
             printBoard(board)
             return True
         #check diagonally
-        
+        if (board[0][0] and board[1][1] and board[2][2]):
+            print("Winner winner Turkey dinner!")
+            printBoard(board)
+            return True
+            
     #hard code
 
 board=[[" "," "," "],[" "," "," "],[" "," "," "]]
 symbol="X"
+
 while symbol!="Q":
     printBoard(board)
-
-    #loop until a good spot is chosen
     goodSpot=False
+    #loop until a good spot is chosen
+    
     while not goodSpot:
-        r = int(input("row: "))-1
-        c = int(input("col: "))-1
+        if symbol == "X":
+            r = int(input("row: "))-1
+            c = int(input("col: "))-1
+        elif symbol == "O":
+            r = random.randint(0,2)
+            c = random.randint(0,2)
         #if we can NOT choose the spot
         if((0<=r<=2) and (0<=c<=2)):
             if (not chooseSpot(r,c,symbol,board)):
                 print("Spot Taken")
             else:
                 goodSpot = True
+    
      
     #check for a winner or CAT
     if catGame(board) or checkForWinners(board):
