@@ -15,7 +15,6 @@ fontSetup=("Comic Sans MS", 30, "normal")
 #-----initialize turtle-----
 mo = t.Turtle()
 mo.shape("turtle")
-mo.shapesize(2)
 mo.fillcolor("brown")
 mo.speed(0)
 
@@ -38,11 +37,11 @@ def countdown():
     if timer<=0:
         counter.write("Times Up!",font=fontSetup)
         timesUp=True
+        mo.hideturtle()
     else:
         counter.write(f'Time: {timer}',font=fontSetup)
         timer-=1
         counter.getscreen().ontimer(countdown,counterInterval)
-        print(timer)
 
 def updateScore():
     global score
@@ -51,6 +50,7 @@ def updateScore():
     scorekeeper.clear()      #clear what it already wrote
     #write the score
     scorekeeper.write(f"Score: {score}",font=fontSetup) 
+    decreaseSize()
 
 def changePosition():
     #move the turtle to a random location on the screen
@@ -70,11 +70,19 @@ def changePosition():
 #no matter what, if it is a mouse click
 #    pass in x and y
 def moClicked(x,y): 
-    #x and y are the cuursor's coordinates
-    print(x,y)
-    print("mo was clicked")
+#x and y are the cuursor's coordinates
     changePosition()
     updateScore()
+    
+def decreaseSize():
+    mo.shapesize
+    if mo.shapesize != 1:
+        decrease = mo.shapesize/2
+        mo.shapesize(decrease) 
+    else:
+        mo.shapesize(10)
+    print(mo.turtlesize) 
+#def clickAccuracy():
 
 
 #-----events----------------
