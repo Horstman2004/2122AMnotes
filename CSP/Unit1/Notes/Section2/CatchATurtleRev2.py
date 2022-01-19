@@ -1,6 +1,7 @@
 #-----import statements-----
 import turtle as t
 import random as r
+from unicodedata import name
 import leaderboard as lb
 
 #-----Leaderboard-----------
@@ -13,6 +14,7 @@ with open(FILENAME, "r") as f:
     f.close()
 
 #-----game configuration----
+name = input("Please enter your name")
 wn = t.Screen()
 SCREENW,SCREENH = 300,300
 score=0
@@ -89,6 +91,8 @@ def changePosition():
 def manageLeaderboard():
     global score
     global scorekeeper
+    global name
+    
     
     #parallel list --> smae length and corrosponding data based on the index
     namesList = lb.get_names(FILENAME)
@@ -98,7 +102,11 @@ def manageLeaderboard():
     print("namesList",namesList)
     print("scoresList",scoresList)
     
-
+	if (len(scoresList)<5 or score >=scoresList[4]):
+		lb.draw_leaderboard(True,namesList,scoresList,name,scorekeeper,score)
+	else:
+		lb.draw_leaderboard(True,namesList,scoresList,name,scorekeeper,score)
+	mo.hideturtle()
 
 
 
