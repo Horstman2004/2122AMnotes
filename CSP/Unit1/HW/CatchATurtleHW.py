@@ -20,6 +20,8 @@ mo = t.Turtle()
 mo.shape("turtle")
 mo.fillcolor("brown")
 mo.speed(0)
+mo.hideturtle()
+
 
 scorekeeper = t.Turtle()
 scorekeeper.hideturtle()
@@ -45,9 +47,10 @@ def countdown2():
     global timer, timesUp
     counter.clear()
     if timer<=0:
-        counter.write("Times Up!",font=fontSetup)
-        timesUp=True
-        mo.hideturtle()
+        counter.write("Start",font=fontSetup)
+        timer+=5
+        countdown1()
+        mo.showturtle()    
     else:
         counter.write(f'Time: {timer}',font=fontSetup)
         timer-=1
@@ -58,9 +61,9 @@ def countdown1():
     global timer, timesUp
     counter.clear()
     if timer<=0:
-        counter.write("Times Up!",font=fontSetup)
+        counter.write("Times Up",font=fontSetup)
         timesUp=True
-        mo.hideturtle
+        mo.hideturtle()
     else:
         counter.write(f'Time: {timer}',font=fontSetup)
         timer-=1
@@ -110,13 +113,13 @@ def clickAccuracy(x,y):
     click+=1
     accuracy= round((score/click)*100,0)
     mo.showturtle
+    accuracytxt.clear()
     mo.clear()
     accuracytxt.write(f"Accuracy: {accuracy}%", font=fontSetup)
     
 #-----events----------------
 #obj.method(command or function name)
-wn.onscreenclick(clickAccuracy)
-wn.ontimer(countdown2,counterInterval) 
-wn.ontimer(countdown1,counterInterval)     #"acts" like the clock widget from MIT
+wn.onclick(clickAccuracy)
+wn.ontimer(countdown2,counterInterval)      #"acts" like the clock widget from MIT
 mo.onclick(moClicked)
 wn.mainloop()
