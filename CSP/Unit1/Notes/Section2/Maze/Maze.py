@@ -96,7 +96,6 @@ for i in range(NUMWALLS):
                drawDoor()
           mazeDrawer.forward(lenghtOfTheWall)
           mazeDrawer.left(90)
-          
 for i in range(15):
      randNumList.append(random.randint(-200,200))
 print(randNumList)
