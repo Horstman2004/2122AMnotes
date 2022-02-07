@@ -31,23 +31,7 @@ food.shape("circle")
 food.shapesize(.5,.5)    #scaling the food down by 50%
 food.color("green")
 food.penup()
-food.goto(-10,50)
-
-food1 = t.Turtle()
-food1.speed(0)
-food1.shape("circle")
-food1.shapesize(.5,.5)    #scaling the food down by 50%
-food1.color("green")
-food1.penup()
-food1.goto(100,100)
-
-food2 = t.Turtle()
-food2.speed(0)
-food2.shape("circle")
-food2.shapesize(.5,.5)    #scaling the food down by 50%
-food2.color("green")
-food2.penup()
-food2.goto(10,43)
+food.goto(100,100)
 
 food1 = t.Turtle()
 food1.speed(0)
@@ -128,7 +112,7 @@ while True:
     #Food Collision?
     #if head and food's distance < 20
     # turtle.distance(turtle) -> distance between 2 turtle obj
-    if head.distance(food,food1,food2) < 20:
+    if head.distance(food) < 20:
         #move the food
         x=random.randint(-290,290)
         y=random.randint(-290,290)
