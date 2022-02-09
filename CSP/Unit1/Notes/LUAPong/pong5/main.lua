@@ -1,5 +1,8 @@
 --var = import or require the file 'push'
 push = require 'push'
+Class = require 'class'
+require 'Paddle'
+require 'Ball"'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -34,15 +37,11 @@ function love.load()
     player1Score = 0
     player2Score = 0
 
-    player1Y = 30
-    player2Y = VIRTUAL_HEIGHT-50
-
-    ballx = VIRTUAL_WIDTH / 2 - 2
-    bally = VIRTUAL_HEIGHT / 2 - 2
+    player1 = Paddle(10,30,5,20)
+    player2 = Paddle(VIRTUAL_WIDTH-10,VIRTUAL_HEIGHT-30,5,20
 
     --determining a random dx and y to move the ball
-    ballDx = math.random(2) == 1 and 100 or -100
-    ballDy = math.random(-50,50)
+    ball = Ball('fill',ballx,bally,4,4) 
 
     --this var will help determine what is going on in the game
     --in the beginning, menu, main game, high score, etc
@@ -55,19 +54,23 @@ function love.update(dt)
     --player 1 movement
     if love.keyboard.isDown('w') then
         --move up by add a negative paddle speed to the y scaled by dt
-        player1Y = player1Y + -PADDLE_SPEED * dt
+        player1.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('s') then
         --move up by add a positive paddle speed to the y scaled by dt
-        player1Y = player1Y + PADDLE_SPEED * dt
+        player1.dy = PADDLE_SPEED
+    else
+        player1.dy = 0
     end
 
     --player 2 movement
     if love.keyboard.isDown('e') then
         --move up by add a negative paddle speed to the y scaled by dt
-        player2Y = player2Y + -PADDLE_SPEED * dt
+        player2.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('d') then
         --move up by add a positive paddle speed to the y scaled by dt
-        player2Y = player2Y + PADDLE_SPEED * dt
+        player2.dy = PADDLE_SPEED
+    else
+        player2.dy = 0
     end
 
     --ball movement
@@ -122,7 +125,9 @@ function love.draw()
     love.graphics.print(tostring(player1Score),VIRTUAL_WIDTH/2-50,VIRTUAL_HEIGHT/3)
     love.graphics.print(tostring(player2Score),VIRTUAL_WIDTH/2+50,VIRTUAL_HEIGHT/3)
     --Draw the paddles and the ball
-
+    player1.render()
+    player2.render()
+    ball.render()
     --love.graphics.setting.rectangle('filled or not',x,y,width,height)
     love.graphics.rectangle('fill',10,player1Y,5,20)
     --second paddle
