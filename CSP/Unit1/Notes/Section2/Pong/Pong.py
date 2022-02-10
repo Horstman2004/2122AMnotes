@@ -110,10 +110,19 @@ def collidedWithPaddle(paddle,b):       #passing in the paddle and ball turtles
         else:
             b.setx(b.xcor()+5)      #cheat to keep the ball out of the paddle
         b.forward(speed)
+
+def cpuMove():
+    x,y = ball.position()
+    rx,ry = rightPlayer.position()
+    if y < ry:
+        rightPlayer.sety(ry+10)
+    elif y > ry:
+        rightPlayer.sety(ry-10)
         
 
 def move():             #reseting the ball's x,y
     global leftScore,rightScore
+    cpuMove()
     ball.forward(10)
     x,y = ball.position()
     #did it hit the top or bottom
@@ -134,7 +143,8 @@ def move():             #reseting the ball's x,y
     else:
         collidedWithPaddle(leftPlayer,ball)
         collidedWithPaddle(rightPlayer,ball)
-    wn.ontimer(move,20)
+    wn.ontimer(move,20)    
+
 
 
 
@@ -145,8 +155,6 @@ wn.onkeypress(upLeft,"w")
 wn.onkeypress(downLeft,"s")
 wn.onkeypress(upRight,"e")
 wn.onkeypress(downRight,"d")
- 
 draw_field()
 move()
-
 wn.mainloop()

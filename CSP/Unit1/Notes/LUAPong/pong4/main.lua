@@ -76,6 +76,13 @@ function love.update(dt)
         ballx = ballx + ballDx * dt
         bally = bally + ballDy * dt
     end
+
+    --Collision
+    if player1Y.
+        
+    end
+
+
 end
 
 --Check for any keypressing
