@@ -7,6 +7,8 @@ import random
 #game configuration
 delay = 0.1
 bodyParts=[]
+cpuBody=[]
+directionList=[]
 snakeSpeed = 5
 starter=False
 
@@ -23,6 +25,11 @@ head = t.Turtle(shape="square")
 head.speed(snakeSpeed)
 head.penup()
 head.direction="stop"
+
+cpuHead = t.Turtle(shape="square")
+cpuHead.speed(snakeSpeed)
+cpuHead.penup()
+cpuHead.direction="stop"
 
 #create the food
 food = t.Turtle()
@@ -77,10 +84,10 @@ def move():
     
     elif head.direction == "left":
         x = head.xcor()     #get the x coor
-        head.setx(x-20)     #set the new x coordinate
-        
+        head.setx(x-20)     #set the new x coordinate   
+
 def hideTheBodyParts():       #gameover
-    global bodyParts
+    global bodyParts,cpuBody
     time.sleep(1)            #wait a second
     head.goto(0,0)
     head.direction="stop"
@@ -88,6 +95,13 @@ def hideTheBodyParts():       #gameover
     for eachPart in bodyParts:
         eachPart.goto(1000,1000)
     bodyParts=[]
+    
+    cpuHead.goto(100,100)
+    cpuHead.direction="stop"
+    #hide the parts
+    for eachPart in cpuBody:
+        eachPart.goto(1000,1000)
+    cpuBody=[]
     
 def speed():
     global snakeSpeed
@@ -108,11 +122,13 @@ while True:
     #Border Collision?
     if head.xcor()>290 or head.xcor()<-290 or head.ycor()>290 or head.ycor()<-290:
         hideTheBodyParts()
+    elif cpuHead.xcor()>290 or cpuHead.xcor()<-290 or cpuHead.ycor()>290 or cpuHead.ycor()<-290:
+        hideTheBodyParts()
 
     #Food Collision?
     #if head and food's distance < 20
     # turtle.distance(turtle) -> distance between 2 turtle obj
-    if head.distance(food) < 20:
+    if head.distance(food) < 20 or cpuHead.distance(food) < 20:
         #move the food
         x=random.randint(-290,290)
         y=random.randint(-290,290)
@@ -124,8 +140,10 @@ while True:
         part.color("gray")
         part.penup()
         bodyParts.append(part)
+        cpuBody.append(part)
         speed()
-    if head.distance(food1) < 20:
+        
+    elif head.distance(food1) < 20 or cpuHead.distance(food1) < 20:
         #move the food
         x=random.randint(-290,290)
         y=random.randint(-290,290)
@@ -137,8 +155,10 @@ while True:
         part.color("gray")
         part.penup()
         bodyParts.append(part)
+        cpuBody.append(part)
         speed()
-    if head.distance(food2) < 20:
+        
+    elif head.distance(food2) < 20 or cpuHead.distance(food2) < 20:
         #move the food
         x=random.randint(-290,290)
         y=random.randint(-290,290)
@@ -150,14 +170,18 @@ while True:
         part.color("gray")
         part.penup()
         bodyParts.append(part)
+        cpuBody.append(part)
         speed()
-
+    
     #move the snake
     #Move the butt to the neck
-    for i in range(len(bodyParts)-1, 0, -1):    #last index to the first index
+    for i,c in range(len(bodyParts)-1, 0, -1):    #last index to the first index
         x=bodyParts[i-1].xcor()  #get the x of the next bodypart
         y=bodyParts[i-1].ycor()  #get the y of the next bodypart
         bodyParts[i].goto(x,y)   #reset the current bodypart x,y
+        x=cpuBody[c-1].xcor()  #get the x of the next bodypart
+        y=cpuBody[c-1].ycor()  #get the y of the next bodypart
+        cpuBody[c].goto(x,y)   #reset the current bodypart x,y
 
     #Move the neck to the head
     if len(bodyParts)>0:
@@ -165,6 +189,12 @@ while True:
         y=head.ycor()
         bodyParts[0].goto(x,y)
         move()    #Move the head
+    elif len(cpuBody)>0:
+        x=cpuHead.xcor()
+        y=cpuHead.ycor()
+        cpuBody[0].goto(x,y)
+        move()    #Move the head
+
 
     #Did we hit ourselves?
     for part in bodyParts:

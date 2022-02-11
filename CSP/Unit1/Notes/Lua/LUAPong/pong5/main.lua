@@ -2,6 +2,7 @@
 push = require 'push'
 Class = require 'class'
 require 'Paddle'
+require 'Ball'
 
 WINDOW_WIDTH=1280
 WINDOW_HEIGHT=720
@@ -21,6 +22,7 @@ function love.load()
      -- use nearest-neighbor filtering on upscaling and downscaling to prevent blurry
      love.graphics.setDefaultFilter('nearest','nearest')
      
+     love.window.setTitle('Pong')
      -- var = love's graphics module.newFont('file',fontsize)
      smallFont = love.graphics.newFont('font.ttf',8)
      scoreFont = love.graphics.newFont('font.ttf',32)
@@ -40,13 +42,7 @@ function love.load()
      player1 = Paddle(10,30,5,20)
      player2 = Paddle(VIRTUAL_WIDTH-10, VIRTUAL_HEIGHT-30, 5, 20)
 
-     ballx = VIRTUAL_WIDTH / 2 - 2 
-     bally = VIRTUAL_HEIGHT / 2 - 2
-
-     --determining a random dx and dy to move the ball
-     ballDx = math.random(2) == 1 and 100 or -100
-     ballDy = math.random(-50,50)
-
+     ball = Ball(VIRTUAL_WIDTH/2-2,VIRTUAL_HEIGHT/2-2,4,4)
      --this var will help determine what is going on in the game
      --in the beginning, menu, main game, high score, etc
      gameState = 'start'
@@ -68,10 +64,10 @@ function love.update(dt)
      end
 
      --player 2 movement
-     if love.keyboard.isDown('up') then
+     if love.keyboard.isDown('e') then
           -- move up by add a negative paddle speed to the y scaled by dt
           player2.dy = -PADDLE_SPEED
-     elseif love.keyboard.isDown('down') then
+     elseif love.keyboard.isDown('d') then
           -- move down by add a positive paddle speed to the y scaled by dt
           player2.dy = PADDLE_SPEED
      else
@@ -81,14 +77,48 @@ function love.update(dt)
      --ball movement
      if gameState == 'play' then
           --scale the velocity by dt so movement is framerate-independent
-          ballx = ballx + ballDx * dt
-          bally = bally + ballDy * dt
+          ball:update(dt)
      end
+     
      player1:update(dt)
      player2:update(dt)
 
-end
 
+     --Ball Collision
+     if ball.collides(player1) then
+          ball.dx = -ball.dx * 1.03
+          ball.x = player1.x + 5
+          if ball.dy<0 then
+               ball.dy = -math.random(10,150)
+          else
+               ball.dy = math.random(10,150)
+          end
+     end
+
+     if ball.collides(player2) then
+          ball.dx = -ball.dx * 1.03
+          ball.x = player2.x + 5
+          if ball.dy<0 then
+               ball.dy = -math.random(10,150)
+          else
+               ball.dy = math.random(10,150)
+          end
+     end
+
+     if ball.y <= 0 then
+          ball.y = 0
+          ball.dy = -ball.dy
+     end
+
+     if ball.y >= VIRTUAL_HEIGHT - 4 then
+          ball.y = VIRTUAL_HEIGHT - 4
+          ball.dy = -ball.dy
+     end
+
+
+     ball:update(dt)
+     end
+end
 
 --Check for any keypressing
 function love.keypressed(key)
@@ -100,12 +130,7 @@ function love.keypressed(key)
                gameState='play'
           else
                gameState='start'
-               ballx = VIRTUAL_WIDTH / 2 - 2 
-               bally = VIRTUAL_HEIGHT / 2 - 2
-               --and/or pattern here is Lua's way of accomplishing a ternary operation
-               --very common in other programming languages like C
-               ballDx = math.random(2) == 1 and 100 or -100
-               ballDy = math.random(-50,50)
+               ball:reset()
           end
      end
 end
@@ -135,9 +160,18 @@ function love.draw()
      -- Draw the paddles and the ball
      player1:render()
      player2:render()
+     ball:render()
 
-     love.graphics.rectangle('fill', ballx, bally, 4, 4)
-
+     displayFPS()
      --end virtual resolution
      push:apply('end')
+end
+
+
+
+--anything that is not a love function put a th e bottom
+function displayFPS()
+     love.graphics.setFont(smallFont)
+     love.graphics.setColor(0,255,0,255)
+     love.graphics.print('FPS: ' ..tostring(love.timer.getFPS()),10,10)
 end

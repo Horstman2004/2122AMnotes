@@ -7,9 +7,11 @@ COURT_HEIGHT = 600
 COURT_WIDTH = 1000
 PADDLE_WIDTH = 45
 BALL_SIZE = 15
-speed = 10
+speed = 0
 leftScore = 0
 rightScore = 0
+leftPaddleHits = 0
+rightPaddleHits = 0
 fontSettings = "Arial"
 
 #turtle generation
@@ -104,7 +106,7 @@ def resetBall():        #debugging / gameover
 def collidedWithPaddle(paddle,b):       #passing in the paddle and ball turtles
     #this f(x) will check if the given ball and paddle collide
     if paddle.distance(b) < PADDLE_WIDTH:
-        b.setheading(180-b.heading()) 
+        b.setheading(180-b.heading())
         if b.xcor()>0:              #on the right side of the court
             b.setx(b.xcor()-5)     #cheat to keep ball out of the paddle
         else:
@@ -115,14 +117,24 @@ def cpuMove():
     x,y = ball.position()
     rx,ry = rightPlayer.position()
     if y < ry:
-        rightPlayer.sety(ry+10)
+        rightPlayer.sety(y)
     elif y > ry:
-        rightPlayer.sety(ry-10)
+        rightPlayer.sety(y)
         
+"""
+def cpuMove1():
+    x,y = ball.position()
+    rx,ry = leftPlayer.position()
+    if y < ry:
+        leftPlayer.sety(y)
+    elif y > ry:
+        leftPlayer.sety(y)
+"""
 
 def move():             #reseting the ball's x,y
-    global leftScore,rightScore
+    global leftScore,rightScore,leftPaddleHits,rightPaddleHits
     cpuMove()
+    #cpuMove1()
     ball.forward(10)
     x,y = ball.position()
     #did it hit the top or bottom
@@ -132,12 +144,21 @@ def move():             #reseting the ball's x,y
     elif x>(COURT_WIDTH/2) or x<(-COURT_WIDTH/2):
         if x>-COURT_WIDTH/2:
             leftScore+=1
+            leftPaddleHits+=1
             lScore.clear()
             lScore.write(leftScore,font=fontSettings)
+            if leftPaddleHits > 2:
+                leftPlayer.turtlesize(6,1)
+                rightPlayer.turtlesize(2,1)
+                leftPaddleHits = 0
         elif x<COURT_WIDTH/2:
             rightScore+=1
+            rightPaddleHits+=1
             rScore.clear()
             rScore.write(rightScore,font=fontSettings)
+            if rightPaddleHits >2 :
+                leftPlayer.turtlesize(2,1)
+                rightPlayer.turtlesize(6,1)
         resetBall()
     #did it hit a paddle
     else:
