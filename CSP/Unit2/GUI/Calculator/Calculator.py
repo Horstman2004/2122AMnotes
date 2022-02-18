@@ -1,9 +1,10 @@
 #Imports
 from tkinter import *
+from turtle import numinput
 
 #Global Varibles
 expression=""
-
+operator=0
 #Bulid out root
 root = Tk()
 root.title("Calulator")
@@ -11,11 +12,16 @@ root.geometry("312x324")
 
 #Functions
 def buttonClick(item):
-    global expression
+    global expression,operator
     expression += str(item)
     print(expression)
     outputText.set(expression)
-    
+    if operator < 1:
+        if expression == "+" or "/" or "*" or "-":
+            operator+1
+        else:
+            expression="ERROR"
+
 def clearButton():
     global expression
     expression=""
@@ -23,11 +29,16 @@ def clearButton():
     outputText.set(expression)
     
 def equalButton():
-    global expression
+    global expression,operator
+    if "/0" in expression:
+        result="ERROR"
     result=str(eval(expression))
     expression=""
     print(result)
     outputText.set(result)
+    operator+=0
+    
+        
     
 outputText = StringVar()    #StringVar() is a var used in widget 
                             #if you're wanting to pass a value to a widget, you need a StringVar()
