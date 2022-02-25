@@ -49,7 +49,7 @@ function love.load()
 
      player1 = Paddle(10,30,5,20)
      player2 = Paddle(VIRTUAL_WIDTH-10, VIRTUAL_HEIGHT-30, 5, 20)
-     player3 = Paddle(VIRTUAL_HEIGHT-10, VIRTUAL_WIDTH-5, 30, 5)
+     player3 = Paddle(VIRTUAL_WIDTH-10, VIRTUAL_HEIGHT-10, 30, 5)
      player4 = Paddle(10, 5, 30, 5)
 
      ball = Ball(VIRTUAL_WIDTH/2-2,VIRTUAL_HEIGHT/2-2,4,4)
@@ -83,7 +83,7 @@ function love.update(dt)
 
      if ball:collides(player2) then
           ball.dx = -ball.dx * 1.03
-          ball.x = player2.x - 4
+          ball.x = player2.x + 5
           if ball.dy < 0 then
                ball.dy = -math.random(10, 150)
           else
@@ -94,38 +94,23 @@ function love.update(dt)
 
      if ball:collides(player3) then
           ball.dx = -ball.dx * 1.03
-          ball.x = player3.x - 4
           if ball.dy < 0 then
-               ball.dy = -math.random(10, 150)
-          else
                ball.dy = math.random(10, 150)
+          else
+               ball.dy = -math.random(10, 150)
           end
           sounds['paddle_hit']:play()
      end
 
      if ball:collides(player4) then
           ball.dx = -ball.dx * 1.03
-          ball.x = player4.x - 4
           if ball.dy < 0 then
-               ball.dy = -math.random(10, 150)
+               ball.dy = math.random(150, 260)
           else
-               ball.dy = math.random(10, 150)
+               ball.dy = -math.random(150, 260)
           end
           sounds['paddle_hit']:play()
      end
-
-     if ball.y <= 0 then
-          ball.y = 0
-          ball.dy = -ball.dy
-          sounds['wall_hit']:play()
-     end
-
-     if ball.y >= VIRTUAL_HEIGHT - 4 then
-          ball.y = VIRTUAL_HEIGHT - 4
-          ball.dy = -ball.dy
-          sounds['wall_hit']:play()
-     end
-
 
      -- if we reach the left or right edge of the screen, 
      -- go back to start and update the score
@@ -145,7 +130,7 @@ function love.update(dt)
           gameState = 'serve'
      end     
 
-     if ball.x > VIRTUAL_WIDTH then
+     if ball.y > VIRTUAL_HEIGHT then
           sounds['score']:play()
           servingPlayer = 4
           player3Score = player3Score + 1
@@ -153,7 +138,7 @@ function love.update(dt)
           gameState = 'serve'
      end     
 
-     if ball.x < 0 then
+     if ball.y < 0 then
           sounds['score']:play()
           servingPlayer = 3
           player4Score = player4Score + 1
@@ -252,8 +237,8 @@ function love.draw()
      end
 
      love.graphics.setFont(scoreFont)
-     love.graphics.print(tostring(player1Score),VIRTUAL_WIDTH/2-50,VIRTUAL_HEIGHT/4)
-     love.graphics.print(tostring(player2Score),VIRTUAL_WIDTH/2+50,VIRTUAL_HEIGHT/4)
+     love.graphics.print(tostring(player1Score),VIRTUAL_WIDTH/2-50,VIRTUAL_HEIGHT/3)
+     love.graphics.print(tostring(player2Score),VIRTUAL_WIDTH/2+50,VIRTUAL_HEIGHT/3)
      love.graphics.print(tostring(player3Score),VIRTUAL_WIDTH/2-50,VIRTUAL_HEIGHT/2)
      love.graphics.print(tostring(player4Score),VIRTUAL_WIDTH/2+50,VIRTUAL_HEIGHT/2)
 
