@@ -8,19 +8,25 @@
 
 filename="VerticalIssue.txt"
 count = 0
+rowcount = 0
+total = 0
 #read in the text file into a 2D List so you can iterate through it like we did in Tic Tac Toe
 #open the file
 sudoku = open(filename,"r")
 #utilize a for loop to iterate through the file
-puzzleFromFile = list(sudoku)
-
-    #each line should be converted into a list and appended to the board
-
+#each line should be converted into a list and appended to the board
+for i in sudoku:
+    puzzle = list(i[0:9:1])
+    #puzzle = [int(item) for item in puzzle]
+    print(puzzle[0:9])
  
 #utilize a function where you enter a list or row and check if the row has 1-9 exclusively
-def rowChecker(rowToCheck):
-    #if the board isn't solved horizontally, then return False
+def rowChecker():
+    for row in puzzle[0:3]:
+        row = list(row)
+        print(row)
     return True
+rowChecker()
 
 '''
 #create a function that takes in your 2D List above and checks if each horizontal row has 1-9 exclusively
