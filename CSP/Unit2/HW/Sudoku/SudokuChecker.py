@@ -62,17 +62,6 @@ elif sectionCheck(puzzleFromFile):
         7   8   9
     failedSection=1
     print(f"Section {failedSection} Didn't Pass")
-    
-    
-
-    - You can assume the data coming in is like the examples
-    - Need to tell the user where it failed, the more specific the more points (which row, which col, which section)
-        - Some Points: tell the user which method failed first
-        - Average Points: tell which row or column the puzzle failed on
-        - All Points: the exact cell that failed
-    - Seriously, you will want this for later.
-    - Take baby steps.  That's why I recommend functions so you can get more points faster and partial credit when you're stuck.
-
 
 '''
 
