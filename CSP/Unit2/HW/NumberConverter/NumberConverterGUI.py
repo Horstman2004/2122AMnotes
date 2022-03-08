@@ -1,5 +1,6 @@
 #imports
 from tkinter import *
+from unittest import result
 
 #varibles
 
@@ -10,9 +11,26 @@ root.title("NumberConverter")
 root.geometry("355x460")
 
 #functions
-#def decButton():
+def decButton():
     
-#def binButton():
+def binButton(decimal):
+    #1st find the ammount of bits
+    digitList=[]
+    exp = 0
+    while decimal>=1**exp:
+        digitList.insert(0,1**exp) #change the exponent to change the base
+        exp+=1
+    print(digitList)
+
+    #2nd we itterated through the bits to find how many of eac bit is in our number
+    for i in range(len(digitList)):
+        if decimal >= digitList[i]:
+            decimal-=digitList[i]
+            digitList[i] = "1"
+        else:
+            digitList[i] = "0"
+        digitList = [int(item) for item in digitList]
+    print(digitList)
     
 #def octButton():
 
@@ -35,7 +53,9 @@ def hexButton(decimal):
     out="0x"
     for b in digitList:
         out+=str(b)
-    print(out)
+    result=(str(out))
+    print(result)
+    outputText.set(result)
 
 def quitButton():
     mainFrame.quit()
@@ -52,8 +72,8 @@ inputField = Entry(mainFrame,bd=0,justify=RIGHT,width=59,textvariable=outputText
 inputField.grid(row=0,column=0,columnspan=3,padx=1,pady=1,ipady=10)
 
 #main frame buttons
-dec = Button(mainFrame,text="Decimal to Decimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:decButton()).grid(row=1,column=0,padx=1,pady=1)
-binary = Button(mainFrame,text="Decimal to Binary",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:binButton()).grid(row=2,column=0,padx=1,pady=1)
+dec = Button(mainFrame,text="Decimal to Decimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:decButton(inputField)).grid(row=1,column=0,padx=1,pady=1)
+binary = Button(mainFrame,text="Decimal to Binary",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:binButton(inputField)).grid(row=2,column=0,padx=1,pady=1)
 oct = Button(mainFrame,text="Decimal to Octal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:octButton()).grid(row=3,column=0,padx=1,pady=1)
 hex = Button(mainFrame,text="Decimal to Hexdecimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:hexButton(inputField)).grid(row=4,column=0,padx=1,pady=1)
 quit = Button(mainFrame,text="Quit",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:quitButton()).grid(row=5,column=0,padx=1,pady=1)
