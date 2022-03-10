@@ -1,6 +1,5 @@
 #imports
 from tkinter import *
-from unittest import result
 
 #varibles
 
@@ -12,7 +11,8 @@ root.geometry("355x460")
 
 #functions
 def decButton():
-    
+    return True
+
 def binButton(decimal):
     #1st find the ammount of bits
     digitList=[]
