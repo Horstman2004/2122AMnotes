@@ -71,11 +71,15 @@ mainFrame.pack()
 inputField = Entry(mainFrame,bd=0,justify=RIGHT,width=59,textvariable=outputText)
 inputField.grid(row=0,column=0,columnspan=3,padx=1,pady=1,ipady=10)
 
-#main frame buttons
-dec = Button(mainFrame,text="Decimal to Decimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:decButton(inputField)).grid(row=1,column=0,padx=1,pady=1)
-binary = Button(mainFrame,text="Decimal to Binary",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:binButton(inputField)).grid(row=2,column=0,padx=1,pady=1)
-oct = Button(mainFrame,text="Decimal to Octal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:octButton()).grid(row=3,column=0,padx=1,pady=1)
-hex = Button(mainFrame,text="Decimal to Hexdecimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:hexButton(inputField)).grid(row=4,column=0,padx=1,pady=1)
+#instruction labels
+step1LBL = Label(mainFrame,text="Username: ")
+step1LBL.pack(pady=5,padx=5)
+
+#conversion buttons
+dec = Button(mainFrame,text="Decimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:decButton(inputField)).grid(row=1,column=0,padx=1,pady=1)
+bin = Button(mainFrame,text="Binary",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:binButton(inputField)).grid(row=2,column=0,padx=1,pady=1)
+oct = Button(mainFrame,text="Octal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:octButton()).grid(row=3,column=0,padx=1,pady=1)
+hex = Button(mainFrame,text="Hexdecimal",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:hexButton(inputField)).grid(row=4,column=0,padx=1,pady=1)
 quit = Button(mainFrame,text="Quit",fg="black",width=50,height=5,bd=0,bg="#fff",command=lambda:quitButton()).grid(row=5,column=0,padx=1,pady=1)
 
 

@@ -12,10 +12,12 @@ root.title("Sudoku Checker")
 root.geometry("500x500")
 
 #Building Names List
-"""for i in range(81):
+"""
+for i in range(81):
     i.append(namesList)
     i = [str(j) for j in i]
-print(namesList)"""
+print(namesList)
+"""
 
 #functions
 def get():
