@@ -6,6 +6,7 @@ rowcount=0
 columncount=0
 numList=[]
 finalList=[]
+finalFinalList=[]
 #building root()
 root = Tk()
 root.title("Sudoku Checker")
@@ -22,22 +23,20 @@ print(namesList)
 #functions
 def get():
     global numList,finalList
-    index1=1
+    index1=0
     index2=9
     for i in numList:
         print(i.get())
         finalList.append(i.get())
+    for l in range(9):
         for k in range(1):
             tempList=[]
             k=finalList[index1:index2]
-            tempList.append(k)
+            k = ''.join(map(str, k))
+            finalFinalList.append(k)
+            print(finalFinalList)
             index1+=9
-            index2+=9
-            print(tempList)
-            
-            
-                
-                
+            index2+=9         
     print(finalList)
         
 def rowChecker(rowToCheck):
@@ -71,11 +70,8 @@ for j in range(9):
     for i in range(9):
         outputText = StringVar()
         input = Entry(sudokuFrame,bd=0,justify=CENTER,width=7,textvariable=outputText)
-        input.grid(row=rowcount,column=columncount,columnspan=9,padx=2,pady=2,ipady=13)
+        input.grid(row=j,column=i,padx=2,pady=2,ipady=13)
         numList.append(input)
         rowcount+=1
         columncount+=1
-
-
-
 root.mainloop()
