@@ -50,8 +50,8 @@ def rowChecker(rowToCheck):
         else:
             temp.append(rowToCheck[i])
 
-def horizontalCheck(boardToCheck):
-    for i in range(len(numList)):
+def horizontalCheck(boardToCheck):  
+    for i in range(len(numList)):   
         rowChecker(boardToCheck[i])
         
 #frames
