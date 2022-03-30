@@ -10,13 +10,15 @@ pandas.set_option('display.float_format', str)
 
 #states = tempData['state'].value_counts()
 departments = tempData.department.unique()
+
 #cost = tempData['cost'].total()
 ##companies = tempData['company'].value_counts()
+
+#Lists
 departmentsList=[]
 costList=[]
-top5cost=[]
-top5deps=[]
 
+#Finding Min and Max Values
 depTotal =[]
 for i in departments:
     p = tempData.loc[tempData.department == i,"cost"]
@@ -49,6 +51,8 @@ for val in maxVals:
       
 print(minDeps)
 print(maxDeps)
+
+#Min and Max Value Graphs
 plt.bar(minDeps,minVals)
 plt.ylabel("Sales Per Million")
 plt.xlabel("Department")
@@ -60,7 +64,13 @@ plt.xlabel("Department")
 plt.title("Top 5 sales")
 plt.show()
 
+#Fake IPs
+fakeIPList=["0","192","127","255"]
+IPList=[]
 
+
+
+#Other Iterations
 """for i in costList:
     maxVal = max(costList)
     top5cost.append(maxVal)
