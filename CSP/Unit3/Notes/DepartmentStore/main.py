@@ -7,13 +7,14 @@ FILENAME = "MOCK_DATA.csv"
 tempData = pandas.read_csv(FILENAME)
 tempCount = tempData.count(int())
 pandas.set_option('display.float_format', str)
+print(tempData)
 
 #states = tempData['state'].value_counts()
 departments = tempData.department.unique()
-
+IPSList = list(tempData["ip"])
 #cost = tempData['cost'].total()
 ##companies = tempData['company'].value_counts()
-
+print(IPSList)
 #Lists
 departmentsList=[]
 costList=[]
@@ -52,21 +53,74 @@ for val in maxVals:
 print(minDeps)
 print(maxDeps)
 
-#Min and Max Value Graphs
-plt.bar(minDeps,minVals)
-plt.ylabel("Sales Per Million")
-plt.xlabel("Department")
-plt.title("Bottom 5 Sales")
-plt.show()
-plt.bar(maxDeps,maxVals)
-plt.ylabel("Sales Per Million")
-plt.xlabel("Department")
-plt.title("Top 5 sales")
-plt.show()
-
-#Fake IPs
+#Finding Fake IPs
 fakeIPList=["0","192","127","255"]
-IPList=[]
+    
+for i in (IPSList):
+    ip=list(i)
+    if 
+    print(ip)
+
+
+
+
+#Litte UI
+def userInterface():
+    ui = input(str(f'''
+                -----------------------------------------
+                Choose what statistics you want to see...
+                -----------------------------------------
+                Top 5 Departments: T5
+                Bottom 5 Departments: B5
+                Student Purchases: SP
+                Visa or Mastercard: VM
+                -----------------------------------------
+                '''))
+    if ui == "T5" or "t5":
+        max()
+    elif ui == "B5" or "b5":
+        min()
+    elif ui == "SP" or "sp":
+        studentPurchases()
+    elif ui == "VM" or "vm":
+        visaMastercard()
+    else:
+        print(f"""
+            -------------------------
+            Invalid Input: {ui}
+            -------------------------
+            Valid Inputs Below...
+            -------------------------
+            Top 5 Departments: T5
+            Bottom 5 Departments: B5
+            Student Purchases: SP
+            Visa or Mastercard: VM
+            -------------------------
+            """)
+
+
+#UI Functions
+def min():
+    #Min Value Graphs
+    plt.bar(minDeps,minVals)
+    plt.ylabel("Sales Per Million")
+    plt.xlabel("Department")
+    plt.title("Bottom 5 Sales")
+    plt.show()
+    
+def max():
+    #Max Value Graphs
+    plt.bar(maxDeps,maxVals)
+    plt.ylabel("Sales Per Million")
+    plt.xlabel("Department")
+    plt.title("Top 5 sales")
+    plt.show()
+
+def studentPurchases():
+    return
+
+def visaMastercard():
+    return
 
 
 
