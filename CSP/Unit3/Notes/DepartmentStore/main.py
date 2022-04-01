@@ -13,11 +13,42 @@ print(tempData)
 departments = tempData.department.unique()
 IPSList = list(tempData["ip"])
 #cost = tempData['cost'].total()
-##companies = tempData['company'].value_counts()
+#companies = tempData['company'].value_counts()
 print(IPSList)
+
 #Lists
 departmentsList=[]
 costList=[]
+fakeIPS=['0','192','127','255']
+badIPS=[]
+loopTime=0
+badIPIndex=[]
+
+#Finding Fake IPs
+
+for i in (IPSList):
+    numbers=[]      #Triple Digit
+    numbers2=[]     #Single Digit
+    #Finding IP index 
+    for k in range(1):      #Looping once to grab values based on indexs
+        numbers.append(i[:3])
+        numbers2.append(i[0])
+        loopTime+=1
+        for i in numbers:   #Looping to see if there is a fake number
+            if i in fakeIPS:
+                print(f"Fake IP: {i}")
+                badIPS.append(i)
+                badIPIndex.append(loopTime)
+        for i in numbers2:  #Looping to see if there is a fake number
+            if i in fakeIPS:
+                print(f"Fake IP: {i}")
+                badIPS.append(i)
+                badIPIndex.append(loopTime)
+
+#Erasing Purchases with bad IPS
+
+print(badIPS)
+print(badIPIndex)
 
 #Finding Min and Max Values
 depTotal =[]
@@ -52,14 +83,23 @@ for val in maxVals:
       
 print(minDeps)
 print(maxDeps)
-
-#Finding Fake IPs
-fakeIPList=["0","192","127","255"]
     
-for i in (IPSList):
-    ip=list(i)
-    if 
-    print(ip)
+    
+#Fake Ip Finder 1st Iteration   
+"""
+invalidCharacter="."
+for k in ip:
+        if k != invalidCharacter:
+            numbers.append(k)
+        elif k == invalidCharacter:
+            p = "".join(map(str, numbers))
+            if p not in fakeIPS:
+                #print(f"Valid IP: {p}")
+                numbers.clear()
+            elif p in fakeIPS:
+                #print(f"Fake IP: {p}")
+                badIPS.append(numbers)
+                numbers.clear()"""
 
 
 
