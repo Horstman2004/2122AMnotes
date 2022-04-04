@@ -7,25 +7,16 @@ FILENAME = "MOCK_DATA.csv"
 tempData = pandas.read_csv(FILENAME)
 tempCount = tempData.count(int())
 pandas.set_option('display.float_format', str)
+IPSList = list(tempData["ip"])
 print(tempData)
 
-#states = tempData['state'].value_counts()
-departments = tempData.department.unique()
-IPSList = list(tempData["ip"])
-#cost = tempData['cost'].total()
-#companies = tempData['company'].value_counts()
-print(IPSList)
-
 #Lists
-departmentsList=[]
-costList=[]
 fakeIPS=['0','192','127','255']
 badIPS=[]
 loopTime=0
 badIPIndex=[]
 
 #Finding Fake IPs
-
 for i in (IPSList):
     numbers=[]      #Triple Digit
     numbers2=[]     #Single Digit
@@ -46,9 +37,20 @@ for i in (IPSList):
                 badIPIndex.append(loopTime)
 
 #Erasing Purchases with bad IPS
+for i in badIPIndex:
+    tempData.drop(i-1,axis=0,inplace=True)
+print(tempData)
 
-print(badIPS)
-print(badIPIndex)
+#states = tempData['state'].value_counts()
+departments = tempData.department.unique()
+emails = tempData['email']
+#cost = tempData['cost'].total()
+#companies = tempData['company'].value_counts()
+print(IPSList)
+
+#Lists
+departmentsList=[]
+costList=[]
 
 #Finding Min and Max Values
 depTotal =[]
@@ -67,8 +69,7 @@ for tup in depTotal:
 totals.sort()
 minVals = totals[:5]
 maxVals = totals[-5:]
-print(minVals)
-print(maxVals)
+
 minDeps = []
 for val in minVals:
     for tup in depTotal:
@@ -80,26 +81,25 @@ for val in maxVals:
     for tup in depTotal:
         if val == tup[1]:
             maxDeps.append(tup[0])
-      
-print(minDeps)
-print(maxDeps)
+
+#Student Purchases
+numOfPurch = 0
+numOfAllEmails = 0
+studentPurchases = []
+for k in emails: 
+    numOfAllEmails+=1  
+    if '.edu' in k:
+        studentTotal = tempData.loc[tempData.department == i,"cost"]
+        studentPurchases.append(k)
+        numOfPurch+=1
+studentTotal = studentTotal.sum()
+print(studentTotal)
+#Visa or Mastercard
+
+
+
     
-    
-#Fake Ip Finder 1st Iteration   
-"""
-invalidCharacter="."
-for k in ip:
-        if k != invalidCharacter:
-            numbers.append(k)
-        elif k == invalidCharacter:
-            p = "".join(map(str, numbers))
-            if p not in fakeIPS:
-                #print(f"Valid IP: {p}")
-                numbers.clear()
-            elif p in fakeIPS:
-                #print(f"Fake IP: {p}")
-                badIPS.append(numbers)
-                numbers.clear()"""
+
 
 
 
@@ -121,7 +121,7 @@ def userInterface():
     elif ui == "B5" or "b5":
         min()
     elif ui == "SP" or "sp":
-        studentPurchases()
+        studentPurchasesGraph()
     elif ui == "VM" or "vm":
         visaMastercard()
     else:
@@ -147,7 +147,7 @@ def min():
     plt.xlabel("Department")
     plt.title("Bottom 5 Sales")
     plt.show()
-    
+
 def max():
     #Max Value Graphs
     plt.bar(maxDeps,maxVals)
@@ -156,9 +156,13 @@ def max():
     plt.title("Top 5 sales")
     plt.show()
 
-def studentPurchases():
-    return
-
+def studentPurchasesGraph():
+    plt.plot(studentPurchases,numOfAllEmails,numOfPurch)
+    plt.ylabel("Number of Student Purchases")
+    plt.xlabel("Number of All Emails")
+    plt.title("Student Purchases")
+    plt.show()
+studentPurchasesGraph()
 def visaMastercard():
     return
 
@@ -206,4 +210,22 @@ states = []
 for i in data["state"]:
     if not (i in states):
         states.append(i)
+"""
+
+
+#Fake Ip Finder 1st Iteration   
+"""
+invalidCharacter="."
+for k in ip:
+        if k != invalidCharacter:
+            numbers.append(k)
+        elif k == invalidCharacter:
+            p = "".join(map(str, numbers))
+            if p not in fakeIPS:
+                #print(f"Valid IP: {p}")
+                numbers.clear()
+            elif p in fakeIPS:
+                #print(f"Fake IP: {p}")
+                badIPS.append(numbers)
+                numbers.clear()
 """
