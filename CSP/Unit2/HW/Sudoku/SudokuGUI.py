@@ -10,15 +10,8 @@ finalFinalList=[]
 #building root()
 root = Tk()
 root.title("Sudoku Checker")
-root.geometry("500x500")
-
-#Building Names List (Scrapped)
-"""
-for i in range(81):
-    i.append(namesList)
-    i = [str(j) for j in i]
-print(namesList)
-"""
+root.geometry("500x550")
+root.config(bg="grey")
 
 #functions
 def get():
@@ -36,7 +29,7 @@ def get():
             index1+=9               #Adds to index1 & 2 to get next group of strings
             index2+=9         
     print(finalList)
-    horizontalCheck(finalList)      #Sending list ot first check
+    horizontalCheck(finalList)      #Sending list to first check
 
 
 def rowChecker(rowToCheck):
@@ -64,14 +57,15 @@ buttonFrame.pack()
 
 #main frame buttons & labels
 failedText = StringVar()
-colLabel = Label(buttonFrame,textvariable=failedText,fg="black",width=30,height=3,justify=LEFT,bd=0,bg="#fff").grid(row=1,column=1,columnspan=1)
-rowLabel = Label(buttonFrame,textvariable=failedText,fg="black",width=30,height=3,justify=LEFT,bd=0,bg="#fff").grid(row=1,column=2,columnspan=2)
+colLabel = Label(buttonFrame,textvariable=failedText,fg="black",width=30,height=3,justify=LEFT,bd=0,bg="grey").grid(row=1,column=1,columnspan=1)
+rowLabel = Label(buttonFrame,textvariable=failedText,fg="black",width=30,height=3,justify=LEFT,bd=0,bg="grey").grid(row=1,column=2,columnspan=2)
 checkBTN = Button(buttonFrame,text="Sudoku Checker",fg="black",width=59,height=3,justify=LEFT,bd=0,bg="#fff",command=lambda:get()).grid(row=2,column=1,columnspan=9,padx=1,pady=1)
 
 
 #building input fields
 for j in range(9):
     rowcount=0
+    #each widget needs: 
     for i in range(9):
         outputText = StringVar()
         input = Entry(sudokuFrame,bd=0,justify=CENTER,width=7,textvariable=outputText)
