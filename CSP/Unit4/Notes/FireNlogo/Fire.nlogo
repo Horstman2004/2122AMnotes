@@ -5,6 +5,8 @@ globals [
 
 breed [fires fire]    ;; bright red turtles -- the leading edge of the fire
 breed [embers ember]  ;; turtles gradually fading from red to near black
+breed [raindrops raindrop]
+
 
 to setup
   clear-all
@@ -30,6 +32,29 @@ to go
       set breed embers ]
   fade-embers
   tick
+
+  if mouse-down? and not any? turtles-on patch mouse-xcor mouse-ycor
+  [
+    ;; even when raindrops are hidden
+    ;; newly created manual drops will
+    ;; be visible
+    create-raindrops 1
+    [ setxy mouse-xcor mouse-ycor
+      set size 2
+      set color red
+    ]
+  ]
+  ;; make rain-rate drops randomly
+  create-raindrops rain-rate
+  [ move-to one-of patches
+    set size 2
+    set color blue ]
+end
+
+to extinguish1
+  if any? fires = raindrops
+  [
+    ask turtles die]
 end
 
 ;; creates the fire turtles
@@ -106,7 +131,7 @@ density
 density
 0.0
 99.0
-60.0
+42.0
 1.0
 1
 %
@@ -145,6 +170,36 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+16
+196
+188
+229
+rain-rate
+rain-rate
+0
+150
+0.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+16
+242
+188
+275
+evaporation
+evaporation
+.5
+10
+0.5
+.1
+1
+%
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
