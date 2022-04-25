@@ -84,16 +84,17 @@ for val in maxVals:
 
 #Student Purchases
 numOfPurch = 0
-numOfAllEmails = 0
 studentPurchases = []
-for k in emails: 
-    numOfAllEmails+=1  
+studentEmails=[]
+for k in emails:  
     if '.edu' in k:
-        studentTotal = tempData.loc[tempData.department == i,"cost"]
-        studentPurchases.append(k)
-        numOfPurch+=1
-studentTotal = studentTotal.sum()
-print(studentTotal)
+        studentEmails.append(k)
+        for j in studentEmails:
+            studentDepPurchase = tempData.loc[tempData.department == j,"cost"]
+            studentPurchases.append(j,studentDepPurchase)
+            f = open("StudentPurchases.csv", "w")
+            f.write(j,studentDepPurchase)
+            f.close()
 #Visa or Mastercard
 
 
@@ -157,12 +158,11 @@ def max():
     plt.show()
 
 def studentPurchasesGraph():
-    plt.plot(studentPurchases,numOfAllEmails,numOfPurch)
-    plt.ylabel("Number of Student Purchases")
-    plt.xlabel("Number of All Emails")
-    plt.title("Student Purchases")
+    plt.bar(departments,studentTotal)
+    plt.ylabel("Number of Student Purchases Per Million")
+    plt.xlabel("Departments")
+    plt.title("Student Purchases Per Department")
     plt.show()
-studentPurchasesGraph()
 def visaMastercard():
     return
 

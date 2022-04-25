@@ -18,7 +18,7 @@ wordCount = wordData.count(int())
 print(wordData)
 
 #Row Column Check
-for i in wordData:
+for i  in wordData:
     temp=[]
     for j in wordData:
         temp+=(f"{i}{j} ")
