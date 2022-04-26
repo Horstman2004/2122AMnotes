@@ -1,1 +1,0 @@
-('cgillmoreqb@uiuc.edu', Series([], Name: cost, dtype: float64))

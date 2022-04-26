@@ -43,7 +43,6 @@ print(tempData)
 
 #states = tempData['state'].value_counts()
 departments = tempData.department.unique()
-emails = tempData['email']
 #cost = tempData['cost'].total()
 #companies = tempData['company'].value_counts()
 print(IPSList)
@@ -83,17 +82,23 @@ for val in maxVals:
             maxDeps.append(tup[0])
 
 #Student Purchases
-numOfPurch = 0
-studentPurchases = []
-studentEmails=[]
-for k in emails:  
+for k in tempData['email']:  
     if '.edu' in k:
-        studentEmails.append(k)
-        for j in studentEmails:
-            studentDepPurchase = tempData.loc[tempData.department == j,"cost"]
-            studentPurchases.append(j,studentDepPurchase)
-            f = open("StudentPurchases.csv", "w")
-            f.write(j,studentDepPurchase)
+        for j in range(1):
+            studentDepPurchase = tempData.loc[tempData.email == str(k)]
+            studentDep = tempData.loc[tempData.email == k,'department']
+            studentCost = tempData.loc[tempData.email == k,'cost']
+            
+            for v in range(1):
+                for c in departments:
+                    if c in studentDep:
+                        studentDepartment = c
+                        print(studentDepartment)
+                    
+                
+            print(studentCost)
+            f = open("StudentPurchases.csv", "a")
+
             f.close()
 #Visa or Mastercard
 
