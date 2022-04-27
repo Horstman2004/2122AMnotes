@@ -42,10 +42,10 @@ for i in badIPIndex:
 print(tempData)
 
 #states = tempData['state'].value_counts()
-departments = tempData.department.unique()
+departments = list(tempData.department.unique())
 #cost = tempData['cost'].total()
 #companies = tempData['company'].value_counts()
-print(IPSList)
+print(departments)
 
 #Lists
 departmentsList=[]
@@ -74,7 +74,7 @@ for val in minVals:
     for tup in depTotal:
         if val == tup[1]:
             minDeps.append(tup[0])
-            
+        
 maxDeps = []
 for val in maxVals:
     for tup in depTotal:
@@ -82,70 +82,41 @@ for val in maxVals:
             maxDeps.append(tup[0])
 
 #Student Purchases
-for k in tempData['email']:  
+dataCount=0
+allDeps=[]
+departmentTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+departmentSumTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+for k in tempData['email']:
+    dataCount+=1  
     if '.edu' in k:
+        allDeps.append(k)
         for j in range(1):
             studentDepPurchase = tempData.loc[tempData.email == str(k)]
-            studentDep = tempData.loc[tempData.email == k,'department']
-            studentCost = tempData.loc[tempData.email == k,'cost']
+            studentDep = tempData['department'].values[dataCount]           #Grabbing the Department that the student bought from
+            studentCost = tempData['cost'].values[dataCount]                #Grabbing just the cost none of the "float 64 Name: Cost:"
+            index = departments.index(studentDep)
+            num = departmentTotal.pop(index)
+            num+=1
+            index-=1
+            departmentTotal.insert(index,num)
+            departmentStrTotal=[str(int) for int in departmentTotal]        #Turns list of ints to list of strings
+            print(departmentTotal)
             
-            for v in range(1):
-                for c in departments:
-                    if c in studentDep:
-                        studentDepartment = c
-                        print(studentDepartment)
-                    
-                
-            print(studentCost)
-            f = open("StudentPurchases.csv", "a")
-
-            f.close()
+for i in allDeps:
+    index1 = departments.index(studentCost)
+    num1 = departmentSumTotal.pop(index)       
+    num1+=studentCost
+    index1-=1      
+    departmentSumTotal.insert(index1,num1)      
+    departmentStrSumTotal=[str(int) for int in departmentSumTotal]  #Turns list of ints to list of strings
+           
 #Visa or Mastercard
 
 
 
     
 
-
-
-
-
-#Litte UI
-def userInterface():
-    ui = input(str(f'''
-                -----------------------------------------
-                Choose what statistics you want to see...
-                -----------------------------------------
-                Top 5 Departments: T5
-                Bottom 5 Departments: B5
-                Student Purchases: SP
-                Visa or Mastercard: VM
-                -----------------------------------------
-                '''))
-    if ui == "T5" or "t5":
-        max()
-    elif ui == "B5" or "b5":
-        min()
-    elif ui == "SP" or "sp":
-        studentPurchasesGraph()
-    elif ui == "VM" or "vm":
-        visaMastercard()
-    else:
-        print(f"""
-            -------------------------
-            Invalid Input: {ui}
-            -------------------------
-            Valid Inputs Below...
-            -------------------------
-            Top 5 Departments: T5
-            Bottom 5 Departments: B5
-            Student Purchases: SP
-            Visa or Mastercard: VM
-            -------------------------
-            """)
-
-
-#UI Functions
+#Functions
 def min():
     #Min Value Graphs
     plt.bar(minDeps,minVals)
@@ -163,74 +134,21 @@ def max():
     plt.show()
 
 def studentPurchasesGraph():
-    plt.bar(departments,studentTotal)
-    plt.ylabel("Number of Student Purchases Per Million")
+    plt.bar(departmentStrTotal,departments)
+    plt.ylabel("Number of Student Purchases Per Department")
     plt.xlabel("Departments")
     plt.title("Student Purchases Per Department")
     plt.show()
+    
+    plt.bar(departmentStrSumTotal,departments)
+    plt.ylabel("Departments")
+    plt.xlabel("Student Purchases Sum")
+    plt.title("Sum of Student Purchases Per Department")
+    plt.show()
+studentPurchasesGraph()
+
+    
 def visaMastercard():
     return
 
 
-
-#Other Iterations
-"""for i in costList:
-    maxVal = max(costList)
-    top5cost.append(maxVal)
-    index = costList.index(maxVal)
-    costList.remove(maxVal)
-    top5deps.append(departments[index])
-
-print(top5cost)
-print(top5deps)"""
-
-"""print(f'''
-States: 
-{states}
-Department: 
-{departments}
-Company: 
-{companies}
-      ''')"""
-
-"""
-#Different Way
-with open("MOCK_DATA.csv") as f:
-    file=f.readlines()
-    
-uniqueStates=[]
-for line in file:
-    time,ip,email,state,junk = line.split(",")
-    if not (state in uniqueStates):
-        uniqueStates.append(state)
-#print(len(uniqueStates))
-#print(uniqueStates)
-#ANSWER: All states were present based on the print out of two lines above
-
-#Another Way
-import pandas as pd
-data = pd.read_csv("MOCK_DATA.csv",header=0)
-#find unique values
-states = []
-for i in data["state"]:
-    if not (i in states):
-        states.append(i)
-"""
-
-
-#Fake Ip Finder 1st Iteration   
-"""
-invalidCharacter="."
-for k in ip:
-        if k != invalidCharacter:
-            numbers.append(k)
-        elif k == invalidCharacter:
-            p = "".join(map(str, numbers))
-            if p not in fakeIPS:
-                #print(f"Valid IP: {p}")
-                numbers.clear()
-            elif p in fakeIPS:
-                #print(f"Fake IP: {p}")
-                badIPS.append(numbers)
-                numbers.clear()
-"""
