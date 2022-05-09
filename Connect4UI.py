@@ -15,84 +15,79 @@ Credits = t.Turtle()
 
 #lists
 wordingList=["PvC","PvP","Directions","Credits"]
+numsList=[240,95,-65,-210]
 turtles=[PvC,PvP,Directions,Credits]
 
-#Turtle Config
-for i in turtles:
-    i.shapesize(2)
-    i.shape("square")
-    i.speed(0)
-    i.color("blue")
-    i.penup()
+#Functions
+def setup(x,y):
+    mainScreen.reset()
+    #Turtle Config
+    for i in turtles:
+        i.shapesize(2)
+        i.shape("square")
+        i.speed(0)
+        i.color("blue")
+        i.penup()
+        
+    t.penup()
+    t.goto(0,240)
+    t.hideturtle()
 
-#Positions
-PvC.goto(0,125)
-PvP.goto(0,40)
-Directions.goto(0,-40)
-Credits.goto(0,-125)
+    #Positions
+    PvC.goto(0,225)
+    PvP.goto(0,80)
+    Directions.goto(0,-80)
+    Credits.goto(0,-225)
 
-#functions
-"""def splitTurts():
-    global Credits,Directions,PvP,PvC
-    for i in range(len(turtles)):
-        currentTurt = turtles.index[i]
-        if i == 0:
-            Credits = currentTurt
-        elif i == 1:
-            Directions - currentTurt
-        elif i == 2:
-            PvP = currentTurt
-        elif i == 3:
-            PvC = currentTurt
-splitTurts()
-print(Credits,Directions,PvC,PvP)"""
+    for i in range(4):
+        j = numsList[i]
+        k = wordingList[i]
+        t.goto(0,j)
+        t.write(arg=f"{k}",move=True, align="center", font=("Arial", 24, "normal")) 
 
-def onClick():
-    PvC.onclick(gameMode(1))
-    PvP.onclick(gameMode(2))
-    Directions.onclick(gameMode(3))
-    Credits.onclick(gameMode(4))  
-    return
-
-def gameMode(num):
-    if num == 1:
-        pvc()
-    elif num == 2:
-        pvp()
-    elif num == 3:
-        directions()
-    elif num == 4:
-        credits()
-    else:
-        print(f'onClick function Error and/or turtle Error...')
-        mainScreen.bye()
-    return
-
-def pvc():
+def pvc(x,y):
     
+    print("pvc")
     mainScreen.update()
-    return
 
-def pvp():
+def pvp(x,y):
     
+    print("pvp")
     mainScreen.update()
-    return
 
-def directions():
+def directions(x,y):
     
+    print("directions")
     mainScreen.update()
-    return
 
-def credits():
+def credits(x,y):
+    mainScreen.reset()
+    t.hideturtle()
+    for i in turtles:   #hides all turtles
+        i.penup()
+        i.hideturtle()
+    Credits.penup
+    Credits.goto(0,0)
+    Credits.write(arg=f"Credits",move=True, align="center", font=("Arial", 24, "normal"))
+    Credits.goto(0,-70)
+    Credits.write("\tAdam -- User Interface\n" "Rece -- Back End, Game User Interface",move=True, align="center", font=("Arial", 24, "normal"))
+    Credits.goto(220,-180)
+    Credits.color("blue")
+    Credits.shapesize(2)
+    Credits.showturtle()
+    #Back Button
+    t.penup()
+    t.goto(220,-160)
+    t.write(arg=f"Back",move=True, align="center", font=("Arial", 24, "normal"))
+    Credits.onclick(setup)
     
-    mainScreen.update()
-    return
+    
+    
 
-#loop
-mainScreen.listen(
-    PvC.onclick(gameMode(1))
-    PvP.onclick(gameMode(2))
-    Directions.onclick(gameMode(3))
-    Credits.onclick(gameMode(4))  
-)
+setup(1,1)
+PvC.onclick(pvc)
+PvP.onclick(pvp)
+Directions.onclick(directions)
+Credits.onclick(credits)
+
 mainScreen.mainloop()
