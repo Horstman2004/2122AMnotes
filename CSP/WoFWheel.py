@@ -1,38 +1,101 @@
-#imports
-import turtle
-import time
+import random
+from time import sleep
+import turtle as t
 
-#screen
-root = turtle.Screen()
-
-#Constants
+#Varibles
 RADIUS = 300
 WEDGES = 8
-DEGREE_ANGLE= 360/WEDGES
-TOTAL_DEGREE=360
+ANGLE = 360 / WEDGES
+setup = True
+go = True
 
-#Lists
-colors="red"
-turtles=[]
+#main Screen
+mainScreen = t.Screen()
+mainScreen.screensize(canvwidth=800,canvheight=400)
+mainScreen.setup(1400,700)
+mainScreen.tracer(False)
 
 #turtle
-turt = turtle
-turt.hideturtle()
-turt.pendown()
-turt.speed(0)
-turt.sety(turtle.ycor() - RADIUS)
-turt.showturtle()
+t.speed(1)
+t.penup()
+t.hideturtle()
+t.goto(-400,0)
 
-#making list of 8 different turtles
+#turtle drawing
+turtle = t.Turtle()
+turtle.penup()
+center = t.position()
+turtle.goto(-400,0)
+turtle.sety(turtle.ycor() - RADIUS)
 
-def coolCircle(): 
-    for j in range(8):
-        turt.circle(RADIUS,DEGREE_ANGLE)
-        turt.setheading((WEDGES-(j+1))*DEGREE_ANGLE)
-        turt.forward(150)
-    root.update()
+#button
+button = t.Turtle()
+button.penup()
+button.shapesize(3)
+button.setheading(-160)
+button.goto(-120,90)
+button.showturtle()
 
+#writing tool
+writing = t.Turtle()
+writing.hideturtle()
+writing.penup()
+writing.goto(100,0)
+writing.write(arg=f"Press the Arrow on the wheel to start.",move=True, align="center", font=("Arial", 16, "normal"))
+mainScreen.bye
+#Big Colors Big Money
+hues = ["red","orange","yellow","green","blue","purple","pink","teal","maroon"]
+money = ["100","100","100","200","200","200","300","400","500"]
 
-coolCircle()
+#Wheel Setup Runs ONLY ONCE
+while setup == True:
+    for hue in hues:
+        turtle.color(hue)
+        turtle.pendown()
+        turtle.begin_fill()
+        turtle.circle(RADIUS, extent=ANGLE)
+        position = turtle.position()
+        turtle.goto(center)
+        turtle.end_fill()
+        turtle.penup()
+        turtle.goto(position)  
+        mainScreen.update()
+    break
 
-root.mainloop()
+#Set Go True
+time = 0
+def wheelSpin(x,y):
+    global setup,time
+    setup = True
+    stopVal = random.randint(60,90)
+    while setup == True:
+        for hue in hues:
+            colorDoneLast = hue
+            turtle.color(hue)
+            turtle.pendown()
+            turtle.begin_fill()
+            turtle.circle(RADIUS, extent=ANGLE)
+            position = turtle.position()
+            turtle.goto(center)
+            turtle.end_fill()
+            turtle.penup()
+            turtle.goto(position)  
+            mainScreen.update()
+            time+=1
+            print(time)
+            colorDoneLast = hue
+            
+            if time >= stopVal:
+                index = hues.index(colorDoneLast)
+                cash = money[index]
+                writing.clear()
+                writing.write(arg=f"Current Cash: ${cash}",move=True, align="center", font=("Arial", 16, "normal"))
+                time=0
+                setup = False
+                break
+            
+            else:
+                sleep(.1)
+
+button.onclick(wheelSpin)
+mainScreen.mainloop()
